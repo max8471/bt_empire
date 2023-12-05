@@ -189,7 +189,4 @@ if(is_identical) {
 } else {
   message("Not each faction controlling at least one star system in 2830 is active this year")}
 ```
-if (all(are_all_numerical)) {
-  message("All numerical variables are recognised as they should be")
-} else {
-  message("Not all numerical variables are recognised as they should be")}
+
