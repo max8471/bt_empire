@@ -83,4 +83,30 @@ ggplot(df_filtered, aes(x = `Relative Mass`, y = `STAR TEMPERATURE`)) +
        y = "STAR TEMPERATURE")
 ```
 ### Q6
+```{r}
+numerical_variables <- c("Relative Mass", "STAR TEMPERATURE", "RADIUS", "relative luminosity")
+
+extreme_stars_df <- data.frame(Variable = character(), Star = numeric(), Value = numeric(), Extreme_Type = character(), stringsAsFactors = FALSE)
+
+for (variable in numerical_variables) {
+
+  most_extreme_index <- which.max(df[[variable]])
+  least_extreme_index <- which.min(df[[variable]])
+
+  most_extreme_star <- df[most_extreme_index, c("star_number", variable)]
+  least_extreme_star <- df[least_extreme_index, c("star_number", variable)]
+
+  extreme_stars_df <- bind_rows(
+    extreme_stars_df,
+    data.frame(
+      Variable = rep(variable, 2),
+      Star = c(most_extreme_star$star_number, least_extreme_star$star_number),
+      Value = c(most_extreme_star[[variable]], least_extreme_star[[variable]]),
+      Extreme_Type = c("Biggest Value", "Smallest Value")
+    ) |>
+      mutate(Star = as.numeric(Star))
+  )
+}
+
+```
 
