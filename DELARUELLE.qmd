@@ -178,3 +178,18 @@ largest_stars <- merged_data_12 |>
 kable(largest_stars, caption = "Largest Star Controlled by Each Faction")
 ```
 
+### Q14
+```{r}
+filtered_data_14 <- merged_data_12 %>%
+  filter(`Initial Year` < 2830, is.na(`DISSOLUTION YEAR`) | `DISSOLUTION YEAR` >= 2830)
+
+is_identical<-identical(merged_data_12,filtered_data_14)
+if(is_identical) {
+  message("Each faction controlling at least one star system in 2830 is active this year")
+} else {
+  message("Not each faction controlling at least one star system in 2830 is active this year")}
+```
+if (all(are_all_numerical)) {
+  message("All numerical variables are recognised as they should be")
+} else {
+  message("Not all numerical variables are recognised as they should be")}
