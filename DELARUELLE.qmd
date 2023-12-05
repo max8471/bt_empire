@@ -189,4 +189,10 @@ if(is_identical) {
 } else {
   message("Not each faction controlling at least one star system in 2830 is active this year")}
 ```
+# 4 - Improved data representation
+```{r}
+stellar_types_1<-vroom(file=here("DataFolder/star_types.csv"),delim=",",na="NA",show_col_types=FALSE)
+
+stellar_types_2<-vroom(file=here("DataFolder/Yerkes_luminosity_classes.csv"),delim=",",na="NA",show_col_types=FALSE)
+```
 
