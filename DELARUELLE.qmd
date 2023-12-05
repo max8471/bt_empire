@@ -5,7 +5,7 @@ format: html
 ---
 
 [Link](https://github.com/max8471/bt_empire) to the github repository
-
+# 1 - Main Data Set Import
 ```{r}
 #| echo: false
 #| message: false
@@ -68,4 +68,19 @@ metrics_df <- data.frame(
 
 kable(metrics_df)
 ```
+
+# 2 - Introductory Analysis
+
+### Q5
+```{r}
+df_filtered <- df %>%
+  filter(!is.na(`STAR TEMPERATURE`) & !is.na(`Relative Mass`))
+
+ggplot(df_filtered, aes(x = `Relative Mass`, y = `STAR TEMPERATURE`)) +
+  geom_point() +
+  labs(title = "Temperature of a Star as a Function of its Mass",
+       x = "Relative Mass",
+       y = "STAR TEMPERATURE")
+```
+### Q6
 
