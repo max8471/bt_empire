@@ -167,4 +167,14 @@ ggplot(filtered_data_12, aes(x = star_number, y = `Distance (Lightyears)`)) +
        y = "Distance to the Sun (Lightyears)")+
   facet_wrap(~`Name Of The Faction`, ncol = 3) 
 ```
+### Q13
+
+```{r}
+largest_stars <- merged_data_12 |>
+  group_by(`Name Of The Faction`) |>
+  slice(which.max(RADIUS))|>
+  select(`Name Of The Faction`,star_number,RADIUS)
+
+kable(largest_stars, caption = "Largest Star Controlled by Each Faction")
+```
 
