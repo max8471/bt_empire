@@ -1,0 +1,71 @@
+---
+title: "FinalLab_bt_empire"
+author: "Maximilien de La Ruelle"
+format: html
+---
+
+[Link](https://github.com/max8471/bt_empire) to the github repository
+
+```{r}
+#| echo: false
+#| message: false
+library(ggplot2)
+library(vroom)
+library(dplyr)
+library(tidyr)
+library(here)
+library(knitr)
+```
+
+```{r}
+#| echo: false
+#| message: false
+here::i_am("bt_empire.Rproj")
+```
+
+```{r}
+#| echo: false
+#| message: false
+df<-vroom(file=here("DataFolder/THESYSTEMS.csv"),delim=":",na="NA",show_col_types=FALSE)
+```
+
+### Q3
+```{r}
+num_star_systems=nrow(df)
+if (num_star_systems == 1051) {
+  message <- "Data loading is successful"
+} else {
+  message <- "Data loading failed"
+}
+message(message)
+```
+
+### Q4
+```{r}
+variables_to_check <- c("star_number", "Distance (Lightyears)", "STAR TEMPERATURE", "Relative Mass", "RADIUS", "relative luminosity")
+
+are_all_numerical <- sapply(df[, variables_to_check], is.numeric)
+
+if (all(are_all_numerical)) {
+  message("All numerical variables are recognised as they should be")
+} else {
+  message("Not all numerical variables are recognised as they should be")}
+```
+```{r}
+num_observations <- nrow(df)
+
+num_variables <- ncol(df)
+
+missing_values <- colSums(is.na(df))
+
+obs_with_missing <- sum(rowSums(is.na(df)) > 0)
+
+metrics_df <- data.frame(
+  Metric = c("Number of Observations", "Number of Variables", "Number of Missing Values (per variable)", "Number of Observations with at Least One Missing Value"),
+  Value = c(num_observations, num_variables, toString(missing_values), obs_with_missing)
+)
+
+
+kable(metrics_df)
+```
+

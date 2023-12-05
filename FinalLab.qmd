@@ -1,5 +1,0 @@
----
-title: "FinalLab"
-author: "Maximilien de La Ruelle"
-format: html
----
