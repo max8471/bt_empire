@@ -107,7 +107,23 @@ kable(extreme_stars_df)
 ```
 
 # 3 - Factions
-```{r}
 
+### Q8
+```{r}
+faction<-vroom(file=here("DataFolder/Allbtfactions.csv"),delim=":",na="_",show_col_types=FALSE)
+
+controlling_faction<-vroom(file=here("DataFolder/SYTEM%FACTION.csv"),delim=":",na="NA",show_col_types=FALSE)
+```
+
+### Q9
+```{r}
+filtered_data <- controlling_faction |>
+  filter(Faction_id %in% c('A', 'I', 'U'))
+
+faction_counts <- table(filtered_data$Faction_id)
+
+faction_counts_df <- data.frame(Faction_ID = names(faction_counts), Count = as.numeric(faction_counts))
+
+kable(faction_counts_df)
 ```
 
