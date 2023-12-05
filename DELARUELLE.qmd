@@ -139,14 +139,32 @@ There is `r num_missing_stars` missings stars in SYTEM%FACTION.csv
 filtered_data_11 <- controlling_faction |>
   filter(!(Faction_id %in% c('A', 'I', 'U')))
 
-faction_counts <- filtered_data_11 |>
-  group_by(Faction_id) |>
+merged_data_11<-inner_join(filtered_data_11, faction, by="Faction_id")
+
+faction_counts <- merged_data_11 |>
+  group_by(`Name Of The Faction`) |>
   summarise(Num_Star_Systems = n())
 
-ggplot(faction_counts, aes(x = Faction_id, y = Num_Star_Systems, fill = Faction_id)) +
+ggplot(faction_counts, aes(x = `Name Of The Faction`, y = Num_Star_Systems, fill = `Name Of The Faction`)) +
   geom_bar(stat = "identity") +
   labs(title = "Number of Star Systems Controlled by Each Faction",
        x = "Faction",
        y = "Number of Star Systems")
+```
+### Q12
+```{r}
+merged_data_12 <- inner_join(df, merged_data_11, by = "star_number")
+
+filtered_data_12<-merged_data_12 |>
+  group_by(`Name Of The Faction`)|>
+  filter(n_distinct(star_number)>30)|>
+  ungroup()
+
+ggplot(filtered_data_12, aes(x = star_number, y = `Distance (Lightyears)`)) +
+  geom_col() +
+  labs(title = "Distance to the sun of star systems controlled by factions controlling more than 30 stars",
+       x = "Star number",
+       y = "Distance to the Sun (Lightyears)")+
+  facet_wrap(~`Name Of The Faction`, ncol = 3) 
 ```
 
