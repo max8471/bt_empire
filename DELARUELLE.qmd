@@ -9,16 +9,13 @@ message: false
 [Link](https://github.com/max8471/bt_empire) to the github repository
 
 # 1 - Main Data Set Import
-```{r}
+```{r, message=FALSE}
 library(ggplot2)
 library(vroom)
 library(dplyr)
 library(tidyr)
 library(here)
 library(knitr)
-```
-
-```{r}
 here::i_am("bt_empire.Rproj")
 ```
 
@@ -125,5 +122,31 @@ faction_counts <- table(filtered_data$Faction_id)
 faction_counts_df <- data.frame(Faction_ID = names(faction_counts), Count = as.numeric(faction_counts))
 
 kable(faction_counts_df)
+```
+### Q10
+```{r}
+num_stars_in_df <- length(unique(df$star_number))
+
+num_stars_in_faction <- length(unique(controlling_faction$star_number))
+
+num_missing_stars <- num_stars_in_df - num_stars_in_faction
+```
+
+There is `r num_missing_stars` missings stars in SYTEM%FACTION.csv
+
+### Q11
+```{r}
+filtered_data_11 <- controlling_faction |>
+  filter(!(Faction_id %in% c('A', 'I', 'U')))
+
+faction_counts <- filtered_data_11 |>
+  group_by(Faction_id) |>
+  summarise(Num_Star_Systems = n())
+
+ggplot(faction_counts, aes(x = Faction_id, y = Num_Star_Systems, fill = Faction_id)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Number of Star Systems Controlled by Each Faction",
+       x = "Faction",
+       y = "Number of Star Systems")
 ```
 
